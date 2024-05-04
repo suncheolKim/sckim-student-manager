@@ -1,21 +1,32 @@
 package camp.model;
 
-public class Student {
-    private String studentId;
-    private String studentName;
+import camp.enumtype.IndexGenerator;
 
-    public Student(String seq, String studentName) {
-        this.studentId = seq;
-        this.studentName = studentName;
+public class Student {
+    private static final IndexGenerator indexGenerator = IndexGenerator.STUDENT;
+
+    private final String id;
+    private final String name;
+
+    public Student(String name) {
+        this.id = indexGenerator.nextSeq();
+        this.name = name;
     }
 
     // Getter
-    public String getStudentId() {
-        return studentId;
+    public String getId() {
+        return id;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public String getName() {
+        return name;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

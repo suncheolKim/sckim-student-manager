@@ -1,27 +1,34 @@
 package camp.model;
 
-public class Subject {
-    private String subjectId;
-    private String subjectName;
-    private String subjectType;
+import camp.enumtype.SubjectList;
+import camp.enumtype.IndexGenerator;
+import camp.enumtype.SubjectType;
 
-    public Subject(String seq, String subjectName, String subjectType) {
-        this.subjectId = seq;
-        this.subjectName = subjectName;
-        this.subjectType = subjectType;
+public class Subject {
+    // 인덱스는 외부에서 알 필요가 없다
+    private static final IndexGenerator indexGenerator = IndexGenerator.SUBJECT;
+
+    private final String id;
+    private final String name;
+    private final SubjectType type;
+
+    public Subject(SubjectList subjectList) {
+        this.id = indexGenerator.nextSeq();
+        this.name = subjectList.getName();
+        this.type = subjectList.getType();
     }
 
     // Getter
-    public String getSubjectId() {
-        return subjectId;
+    public String getId() {
+        return id;
     }
 
-    public String getSubjectName() {
-        return subjectName;
+    public String getName() {
+        return name;
     }
 
-    public String getSubjectType() {
-        return subjectType;
+    public SubjectType getType() {
+        return type;
     }
 
 }

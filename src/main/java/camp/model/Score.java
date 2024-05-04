@@ -1,15 +1,24 @@
 package camp.model;
 
-public class Score {
-    private String scoreId;
+import camp.enumtype.IndexGenerator;
 
-    public Score(String seq) {
-        this.scoreId = seq;
+public class Score {
+    private static final IndexGenerator indexGenerator = IndexGenerator.SCORE;
+
+    private final String id;
+    private final int score;
+
+    public Score(int score) {
+        this.id = indexGenerator.nextSeq();
+        this.score = score;
     }
 
     // Getter
-    public String getScoreId() {
-        return scoreId;
+    public String getId() {
+        return id;
     }
 
+    public int getScore() {
+        return score;
+    }
 }

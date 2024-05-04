@@ -1,5 +1,6 @@
 package camp;
 
+import camp.enumtype.SubjectList;
 import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
@@ -22,17 +23,7 @@ public class CampManagementApplication {
     private static List<Subject> subjectStore;
     private static List<Score> ScoreStore;
 
-    // 과목 타입
-    private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
-    private static String SUBJECT_TYPE_CHOICE = "CHOICE";
-
-    // index 관리 필드
-    private static int studentIndex;
-    private static final String INDEX_TYPE_STUDENT = "ST";
-    private static int subjectIndex;
-    private static final String INDEX_TYPE_SUBJECT = "SU";
-    private static int scoreIndex;
-    private static final String INDEX_TYPE_SCORE = "SC";
+    
 
     // 스캐너
     private static Scanner sc = new Scanner(System.in);
@@ -50,71 +41,17 @@ public class CampManagementApplication {
     private static void setInitData() {
         studentStore = new ArrayList<>();
         subjectStore = List.of(
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "Java",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "객체지향",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "Spring",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "JPA",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "MySQL",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "디자인 패턴",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "Spring Security",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "Redis",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "MongoDB",
-                        SUBJECT_TYPE_CHOICE
-                )
+                 new Subject(SubjectList.JAVA)
+                ,new Subject(SubjectList.OOP)
+                ,new Subject(SubjectList.SPRING)
+                ,new Subject(SubjectList.JPA)
+                ,new Subject(SubjectList.MYSQL)
+                ,new Subject(SubjectList.DESIGN_PATTERN)
+                ,new Subject(SubjectList.SPRING_SECURITY)
+                ,new Subject(SubjectList.REDIS)
+                ,new Subject(SubjectList.MONGODB)
         );
         ScoreStore = new ArrayList<>();
-    }
-
-    // index 자동 증가
-    private static String sequence(String type) {
-        switch (type) {
-            case INDEX_TYPE_STUDENT -> {
-                studentIndex++;
-                return INDEX_TYPE_STUDENT + studentIndex;
-            }
-            case INDEX_TYPE_SUBJECT -> {
-                subjectIndex++;
-                return INDEX_TYPE_SUBJECT + subjectIndex;
-            }
-            default -> {
-                scoreIndex++;
-                return INDEX_TYPE_SCORE + scoreIndex;
-            }
-        }
     }
 
     private static void displayMainView() throws InterruptedException {
@@ -170,10 +107,11 @@ public class CampManagementApplication {
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
-
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        
+        Student student = new Student(studentName); // 수강생 인스턴스 생성 예시 코드
+        
         // 기능 구현
-        System.out.println("수강생 등록 성공!\n");
+        System.out.println(student);
     }
 
     // 수강생 목록 조회
