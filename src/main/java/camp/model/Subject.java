@@ -33,10 +33,6 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "Subject{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                '}';
+        return "과목ID: " + id + "\t과목명: " + name + "\t필수여부: " + type.getDesc() + "\n";
     }
 }

@@ -23,6 +23,15 @@ public enum SubjectList {
         this.type = type;
     }
 
+    public static int getMinCountBy(SubjectType subjectType) {
+        if (SubjectType.MANDATORY.equals(subjectType)) {
+            return MIN_COUNT_OF_MANDATORY_SUBJECT;
+        }
+        else {
+            return MIN_COUNT_OF_OPTIONAL_SUBJECT;
+        }
+    }
+
     public String getName() {
         return name;
     }

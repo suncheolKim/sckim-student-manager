@@ -23,12 +23,13 @@ public class Student {
         this.scores = new ArrayList<>();
     }
 
-    public void addMandatorySubject(Subject subject) {
-        mandatorySubjects.add(subject);
-    }
-
-    public void addOptionalSubject(Subject subject) {
-        optionalSubjects.add(subject);
+    public void addSubject(Subject subject) {
+        if (SubjectType.MANDATORY.equals(subject.getType())) {
+            mandatorySubjects.add(subject);
+        }
+        else {
+            optionalSubjects.add(subject);
+        }
     }
 
     // Getter
@@ -40,27 +41,20 @@ public class Student {
         return name;
     }
 
-    public List<Subject> getMandatorySubjects() {
-        return mandatorySubjects;
-    }
-
-    public List<Subject> getOptionalSubjects() {
-        return optionalSubjects;
+    public List<Subject> getSubjects(SubjectType subjectType) {
+        if (subjectType.equals(SubjectType.MANDATORY)) {
+            return mandatorySubjects;
+        }
+        else {
+            return optionalSubjects;
+        }
     }
 
     public List<Score> getScores() {
         return scores;
     }
 
-    public void printMandatorySubjects() {
-        printSubjects(SubjectType.MANDATORY);
-    }
-
-    public void printOptionalSubjects() {
-        printSubjects(SubjectType.OPTIONAL);
-    }
-
-    private void printSubjects(SubjectType subjectType) {
+    public void printSubjects(SubjectType subjectType) {
         final List<Subject> subjects;
         if (SubjectType.MANDATORY.equals(subjectType)) {
             subjects = mandatorySubjects;
@@ -81,12 +75,12 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", mandatorySubjects=" + mandatorySubjects +
-                ", optionalSubjects=" + optionalSubjects +
-                ", scores=" + scores +
-                '}';
+        return "\n\n***********************************************************\n" +
+                "아이디 : " + id + '\n' +
+                "이름 : " + name + '\n' +
+                "필수 과목 :\n" + mandatorySubjects + '\n' +
+                "선택 과목 :\n" + optionalSubjects + '\n' +
+                "점수 :\n" + scores + '\n' +
+                "***********************************************************\n\n";
     }
 }
