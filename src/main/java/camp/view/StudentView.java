@@ -51,7 +51,13 @@ public class StudentView {
         final List<Subject> optional = getOptionalSubjects(optionalSubjects);
 
         // 학생 등록 요청
-        final Student newStudent = studentCreateService.createStudent(new StudentCreateRequest(studentName, mandatory, optional));
+        final Student newStudent;
+        try {
+            newStudent = studentCreateService.createStudent(new StudentCreateRequest(studentName, mandatory, optional));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
 
         System.out.println(newStudent);
     }
@@ -72,18 +78,24 @@ public class StudentView {
         }
 
         final List<Subject> subscribed = new ArrayList<>(subjects.size());
-        while(true) {
-            final String inputValue;
-            if (minCountOfSubject <= subscribed.size()) {
-                System.out.println("\n" + subjectType.getDesc() + "과목 입력 (최소 " + minCountOfSubject + "개) - 추가를 끝내시려면 `q`를 눌러주세요 : ");
-                inputValue = sc.next();
-                if ("q".equalsIgnoreCase(inputValue)) {
-                    break;
-                }
+        boolean hasMinSubjects = false;
+        while (true) {
+            // 수강 가능한 모든 과목을 선택하면 종료
+            if (subjects.size() <= subscribed.size()) {
+                break;
             }
-            else {
-                System.out.println("\n" + subjectType.getDesc() + "과목 입력 (최소 " + minCountOfSubject + "개) : ");
-                inputValue = sc.next();
+
+            if (minCountOfSubject <= subscribed.size()) {
+                hasMinSubjects = true;
+            }
+
+            final String msg = getPrintMessage(subjectType, minCountOfSubject, hasMinSubjects);
+            System.out.println(msg);
+            final String inputValue = sc.next();
+
+            // 최소 입력 과목수를 만족하고
+            if (hasMinSubjects && "q".equalsIgnoreCase(inputValue)) {
+                break;
             }
 
             if (!validate(inputValue, subscribed, subjects)) {
@@ -93,18 +105,26 @@ public class StudentView {
             final int inputNum = Integer.parseInt(inputValue);
             final Subject selectedSubject = subjects.get(inputNum - 1); // 화면에 index + 1 한 값을 출력했으므로 -1 해줌
             subscribed.add(selectedSubject);
-
-            if (subjects.size() > subscribed.size()) {
-                continue;
-            }
-
-            break;
+            printSubjects(subscribed);
         }
+
         return subscribed;
     }
 
+    private String getPrintMessage(SubjectType subjectType, int minCountOfSubject, boolean hasMinSubjects) {
+        final StringBuilder msg = new StringBuilder("\n" + subjectType.getDesc() +
+                                                        " 과목 입력 (최소 " + minCountOfSubject + "개)");
+        if (hasMinSubjects) {
+            msg.append(" - 추가를 끝내시려면 `q`를 눌러주세요");
+        }
+
+        msg.append(" : ");
+
+        return msg.toString();
+    }
+
     private boolean validate(String inputValue, List<Subject> subscribed, List<Subject> subjects) {
-        if (!StringHelper.isDigit(inputValue)) {
+        if (StringHelper.isNotDigit(inputValue)) {
             System.out.println("숫자만 입력해주세요.");
             return false;
         }

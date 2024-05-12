@@ -1,7 +1,7 @@
 package camp.model;
 
-import camp.enumtype.SubjectList;
 import camp.enumtype.IndexGenerator;
+import camp.enumtype.SubjectList;
 import camp.enumtype.SubjectType;
 
 public class Subject {

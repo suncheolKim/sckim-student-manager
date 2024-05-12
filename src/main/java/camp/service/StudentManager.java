@@ -40,7 +40,7 @@ public class StudentManager {
         while (flag) {
             printMenu();
             final String inputString = sc.next();
-            if (!StringHelper.isDigit(inputString)) {
+            if (StringHelper.isNotDigit(inputString)) {
                 System.out.println("숫자만 입력해주세요.\n");
                 continue;
             }
