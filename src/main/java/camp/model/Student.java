@@ -70,4 +70,15 @@ public class Student {
         }
         System.out.println("]");
     }
+
+    public void printOptionalSubjects() {
+        System.out.print("## 수강한 선택 과목: [");
+        for (int i=0; i<optionalSubjects.size(); i++) {
+            if (optionalSubjects.size() >= 2) {
+                System.out.print(",\t");
+            }
+            System.out.print((i+1) + ": " + optionalSubjects.get(i).getName());
+        }
+        System.out.println("]");
+    }
 }

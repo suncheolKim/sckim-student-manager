@@ -15,8 +15,8 @@ public enum SubjectList {
     private final String name;
     private final SubjectType type;
 
-    public static int MIN_MANDATORY_SUBJECT_COUNT = 3;
-    public static int MIN_OPTIONAL_SUBJECT_COUNT = 2;
+    public static int MIN_COUNT_OF_MANDATORY_SUBJECT = 3;
+    public static int MIN_COUNT_OF_OPTIONAL_SUBJECT = 2;
 
     SubjectList(String name, SubjectType type) {
         this.name = name;
