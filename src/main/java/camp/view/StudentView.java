@@ -164,7 +164,7 @@ public class StudentView {
     public void inquireStudent() {
         final List<Student> studentList = studentService.getStudentList();
 
-        if (studentList.size() == 0) {
+        if (studentList.isEmpty()) {
             System.out.println("\n등록된 수강생이 없습니다...");
         }
         else {
