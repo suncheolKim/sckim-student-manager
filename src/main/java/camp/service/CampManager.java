@@ -9,30 +9,25 @@ import java.util.Scanner;
 
 public class CampManager {
     // 데이터 저장소
-    private List<Score> scoreStore;
+    private final List<Score> scoreStore;
 
     // 스캐너
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     // 관리용 클래스
-    private StudentManager sm;
+    private final StudentManager studentManager;
 
     public CampManager() {
         scoreStore = new ArrayList<>();
-        sm = new StudentManager();
+        studentManager = new StudentManager();
     }
 
     public void start() {
-        initData();
         try {
             displayMainView();
         } catch (Exception e) {
             System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
         }
-    }
-
-    // 초기 데이터 생성
-    private void initData() {
     }
 
     private void displayMainView() throws InterruptedException {
@@ -42,7 +37,7 @@ public class CampManager {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> sm.displayView(); // 수강생 관리
+                case 1 -> studentManager.start(); // 수강생 관리
                 case 2 -> displayScoreView(); // 점수 관리
                 case 3 -> flag = false; // 프로그램 종료
                 default -> {

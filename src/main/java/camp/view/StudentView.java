@@ -146,7 +146,7 @@ public class StudentView {
     }
 
     public void printSubjects(List<Subject> subjects) {
-        if (subjects.size() <= 0) {
+        if (subjects.isEmpty()) {
             System.out.println("## 수강중인 과목이 없습니다.");
             return;
         }

@@ -17,7 +17,7 @@ public class StudentManager {
         this.studentView = new StudentView();
     }
 
-    public void displayView() {
+    public void start() {
         boolean flag = true;
         while (flag) {
             printMenu();
