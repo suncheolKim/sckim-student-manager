@@ -84,7 +84,7 @@ public class StudentCreateManager {
                 inputValue = sc.next();
             }
 
-            if (!validateInputValue(inputValue, subjects, student, subjectType)) {
+            if (!validate(inputValue, subjects, student, subjectType)) {
                 continue;
             }
 
@@ -102,7 +102,7 @@ public class StudentCreateManager {
         }
     }
 
-    private boolean validateInputValue(String inputValue, List<Subject> subjects, Student student, SubjectType subjectType) {
+    private boolean validate(String inputValue, List<Subject> subjects, Student student, SubjectType subjectType) {
         if (!StringHelper.isDigit(inputValue)) {
             System.out.println("숫자만 입력해주세요.");
             return false;
@@ -115,7 +115,7 @@ public class StudentCreateManager {
         }
 
         final List<Subject> subscribedSubjects = student.getSubjects(subjectType);
-        final Subject selectedSubject = subjects.get(subjectNum - 1);
+        final Subject selectedSubject = subjects.get(subjectNum - 1); // 입력받은 숫자는 +1된 값이므로 -1을 해줘야 index가 맞다
 
         if (subscribedSubjects.contains(selectedSubject)) {
             System.out.println("이미 수강한 과목입니다.");
