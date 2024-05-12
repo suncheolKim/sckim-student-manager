@@ -6,27 +6,24 @@ import camp.enumtype.SubjectType;
 import camp.model.Student;
 import camp.model.StudentCreateRequest;
 import camp.model.Subject;
-import camp.service.StudentCreateService;
-import camp.service.StudentInquiryService;
+import camp.service.StudentService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class StudentView {
-    private final List<Subject> subjectStore;
-    private final List<Student> studentStore;
+    private final List<Subject> subjectList;
     private final Scanner sc;
 
-    private final StudentCreateService studentCreateService;
-    private final StudentInquiryService studentInquiryService;
+    private final StudentService studentService;
 
-    public StudentView(List<Student> studentStore, List<Subject> subjectStore) {
-        this.subjectStore = subjectStore;
-        this.studentStore = studentStore;
-        this.studentCreateService = new StudentCreateService(studentStore);
-        this.studentInquiryService = new StudentInquiryService(studentStore);
+    public StudentView() {
+        this.subjectList = new ArrayList<>();
+        this.studentService = new StudentService();
         this.sc = new Scanner(System.in);
+        initSubjects(subjectList);
     }
 
     // 수강생 등록
@@ -38,7 +35,7 @@ public class StudentView {
         // 필수과목 선택과목으로 분류
         final List<Subject> mandatorySubjects = new ArrayList<>();
         final List<Subject> optionalSubjects = new ArrayList<>();
-        for (Subject sbj : subjectStore) {
+        for (Subject sbj : subjectList) {
             if (SubjectType.MANDATORY.equals(sbj.getType())) {
                 mandatorySubjects.add(sbj);
             }
@@ -56,7 +53,7 @@ public class StudentView {
         // 학생 등록 요청
         final Student newStudent;
         try {
-            newStudent = studentCreateService.createStudent(new StudentCreateRequest(studentName, mandatory, optional));
+            newStudent = studentService.createStudent(new StudentCreateRequest(studentName, mandatory, optional));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return;
@@ -165,7 +162,7 @@ public class StudentView {
     }
 
     public void inquireStudent() {
-        final List<Student> studentList = studentInquiryService.getStudentList();
+        final List<Student> studentList = studentService.getStudentList();
 
         if (studentList.size() == 0) {
             System.out.println("\n등록된 수강생이 없습니다...");
@@ -179,5 +176,10 @@ public class StudentView {
 
             System.out.println("\n수강생 목록 조회 성공!");
         }
+    }
+
+    private void initSubjects(List<Subject> subjectList) {
+        Arrays.stream(SubjectList.values())
+                .forEach(enumSubject -> subjectList.add(new Subject(enumSubject)));
     }
 }

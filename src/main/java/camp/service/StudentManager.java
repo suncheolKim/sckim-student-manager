@@ -2,21 +2,11 @@ package camp.service;
 
 import camp.common.StringHelper;
 import camp.enumtype.StudentMenu;
-import camp.enumtype.SubjectList;
-import camp.model.Student;
-import camp.model.Subject;
 import camp.view.StudentView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class StudentManager {
-    // 멤버 변수
-    private final List<Student> studentStore;
-    private final List<Subject> subjectStore;
-
     // 서비스
     private final StudentView studentView;
 
@@ -24,10 +14,7 @@ public class StudentManager {
     private final Scanner sc = new Scanner(System.in);
 
     public StudentManager() {
-        this.studentStore = new ArrayList<>();
-        this.subjectStore = new ArrayList<>();
-        initSubjects(subjectStore);
-        this.studentView = new StudentView(studentStore, subjectStore);
+        this.studentView = new StudentView();
     }
 
     public void displayView() {
@@ -63,10 +50,5 @@ public class StudentManager {
         System.out.println("2. 수강생 목록 조회");
         System.out.println("3. 메인 화면 이동");
         System.out.print("관리 항목을 선택하세요...");
-    }
-
-    private void initSubjects(List<Subject> subjectList) {
-        Arrays.stream(SubjectList.values())
-                .forEach(enumSubject -> subjectList.add(new Subject(enumSubject)));
     }
 }

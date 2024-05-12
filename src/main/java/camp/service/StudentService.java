@@ -4,18 +4,19 @@ import camp.common.StringHelper;
 import camp.model.Student;
 import camp.model.StudentCreateRequest;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class StudentCreateService {
-    private final List<Student> studentStore;
+public class StudentService {
+    private final List<Student> studentList;
 
-    // 스캐너
-    private final Scanner sc;
+    public StudentService() {
+        this.studentList = new ArrayList<>();
+    }
 
-    public StudentCreateService(List<Student> studentStore) {
-        this.studentStore = studentStore;
-        this.sc = new Scanner(System.in);
+    // 수강생 조회
+    public List<Student> getStudentList() {
+        return studentList;
     }
 
     // 수강생 등록
@@ -26,7 +27,7 @@ public class StudentCreateService {
                                             , request.getMandatorySubjects()
                                             , request.getOptionalSubjects()
         );
-        studentStore.add(student);
+        studentList.add(student);
 
         return student;
     }
