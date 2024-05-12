@@ -23,6 +23,14 @@ public class Student {
         this.scores = new ArrayList<>();
     }
 
+    public Student(String name, List<Subject> mandatorySubjects, List<Subject> optionalSubjects) {
+        this.id = indexGenerator.nextSeq();
+        this.name = name;
+        this.mandatorySubjects = mandatorySubjects;
+        this.optionalSubjects = optionalSubjects;
+        this.scores = new ArrayList<>();
+    }
+
     public void addSubject(Subject subject) {
         if (SubjectType.MANDATORY.equals(subject.getType())) {
             mandatorySubjects.add(subject);

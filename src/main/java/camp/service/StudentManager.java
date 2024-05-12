@@ -5,6 +5,7 @@ import camp.enumtype.StudentMenu;
 import camp.enumtype.SubjectList;
 import camp.model.Student;
 import camp.model.Subject;
+import camp.view.StudentView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +13,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentManager {
+    // 멤버 변수
     private final List<Student> studentStore;
     private final List<Subject> subjectStore;
+
+    // 서비스
+    private final StudentView studentView;
     private final StudentCreateService scm;
     private final StudentInquiryService sim;
 
@@ -21,10 +26,12 @@ public class StudentManager {
     private final Scanner sc = new Scanner(System.in);
 
     public StudentManager() {
-        studentStore = new ArrayList<>();
-        subjectStore = new ArrayList<>();
-        scm = new StudentCreateService(studentStore, subjectStore);
-        sim = new StudentInquiryService(studentStore);
+        this.studentStore = new ArrayList<>();
+        this.subjectStore = new ArrayList<>();
+
+        this.studentView = new StudentView(studentStore, subjectStore);
+        this.scm = new StudentCreateService(studentStore);
+        this.sim = new StudentInquiryService(studentStore);
         initSubjects();
     }
 
@@ -47,7 +54,7 @@ public class StudentManager {
             }
 
             switch (studentMenu) {
-                case CREATE -> scm.createStudent(); // 수강생 등록
+                case CREATE -> studentView.createStudent(); // 수강생 등록
                 case INQUIRY -> sim.inquireStudent(); // 수강생 목록 조회
                 case TO_MAIN -> flag = false; // 메인 화면 이동
             }
