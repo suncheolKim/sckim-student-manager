@@ -153,7 +153,7 @@ public class CampManager {
                 inputSubject = sc.next();
             }
 
-            final boolean isDigit = inputSubject.matches("^[0-9]+$");
+            final boolean isDigit = inputSubject.matches("^-?[0-9]+$");
 
             if (!isDigit) {
                 System.out.println("숫자만 입력해주세요.");
