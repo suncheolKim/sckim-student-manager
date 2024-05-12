@@ -160,7 +160,7 @@ public class CampManager {
                 continue;
             }
             final int subjectNum = Integer.parseInt(inputSubject);
-            if (subjectNum > subjects.size() || 0 == subjectNum) {
+            if (subjectNum > subjects.size() || 0 >= subjectNum) {
                 System.out.println("없는 과목 번호 입니다. (입력가능 1 ~ " + subjects.size() + ")");
                 continue;
             }
