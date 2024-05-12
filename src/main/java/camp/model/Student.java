@@ -1,6 +1,7 @@
 package camp.model;
 
 import camp.enumtype.IndexGenerator;
+import camp.enumtype.SubjectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,23 +53,28 @@ public class Student {
     }
 
     public void printMandatorySubjects() {
-        System.out.print("## 수강한 필수 과목: [");
-        for (int i=0; i<mandatorySubjects.size(); i++) {
-            if (i >= 1) {
-                System.out.print(",\t");
-            }
-            System.out.print((i+1) + ": " + mandatorySubjects.get(i).getName());
-        }
-        System.out.println("]");
+        printSubjects(SubjectType.MANDATORY);
     }
 
     public void printOptionalSubjects() {
-        System.out.print("## 수강한 선택 과목: [");
-        for (int i=0; i<optionalSubjects.size(); i++) {
+        printSubjects(SubjectType.OPTIONAL);
+    }
+
+    private void printSubjects(SubjectType subjectType) {
+        final List<Subject> subjects;
+        if (SubjectType.MANDATORY.equals(subjectType)) {
+            subjects = mandatorySubjects;
+        }
+        else {
+            subjects = optionalSubjects;
+        }
+
+        System.out.print("## 수강한 " + subjectType.getDesc() + " 과목: [");
+        for (int i = 0; i< subjects.size(); i++) {
             if (i >= 1) {
                 System.out.print(",\t");
             }
-            System.out.print((i+1) + ": " + optionalSubjects.get(i).getName());
+            System.out.print((i+1) + ": " + subjects.get(i).getName());
         }
         System.out.println("]");
     }
