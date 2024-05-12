@@ -38,15 +38,15 @@ public class StudentManager {
                 continue;
             }
 
-            final StudentMenu selectedMenu;
+            final StudentMenu studentMenu;
             try {
-                selectedMenu = StudentMenu.get(Integer.parseInt(inputString));
+                studentMenu = StudentMenu.get(Integer.parseInt(inputString));
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("존재하지 않는 메뉴 입니다.\n");
                 continue;
             }
 
-            switch (selectedMenu) {
+            switch (studentMenu) {
                 case CREATE -> scm.createStudent(); // 수강생 등록
                 case INQUIRY -> sim.inquireStudent(); // 수강생 목록 조회
                 case TO_MAIN -> flag = false; // 메인 화면 이동
