@@ -19,8 +19,6 @@ public class StudentManager {
 
     // 서비스
     private final StudentView studentView;
-    private final StudentCreateService scm;
-    private final StudentInquiryService sim;
 
     // 스캐너
     private final Scanner sc = new Scanner(System.in);
@@ -28,11 +26,8 @@ public class StudentManager {
     public StudentManager() {
         this.studentStore = new ArrayList<>();
         this.subjectStore = new ArrayList<>();
-
+        initSubjects(subjectStore);
         this.studentView = new StudentView(studentStore, subjectStore);
-        this.scm = new StudentCreateService(studentStore);
-        this.sim = new StudentInquiryService(studentStore);
-        initSubjects();
     }
 
     public void displayView() {
@@ -55,7 +50,7 @@ public class StudentManager {
 
             switch (studentMenu) {
                 case CREATE -> studentView.createStudent(); // 수강생 등록
-                case INQUIRY -> sim.inquireStudent(); // 수강생 목록 조회
+                case INQUIRY -> studentView.inquireStudent(); // 수강생 목록 조회
                 case TO_MAIN -> flag = false; // 메인 화면 이동
             }
         }
@@ -70,8 +65,8 @@ public class StudentManager {
         System.out.print("관리 항목을 선택하세요...");
     }
 
-    private void initSubjects() {
+    private void initSubjects(List<Subject> subjectList) {
         Arrays.stream(SubjectList.values())
-                .forEach(enumSubject -> subjectStore.add(new Subject(enumSubject)));
+                .forEach(enumSubject -> subjectList.add(new Subject(enumSubject)));
     }
 }

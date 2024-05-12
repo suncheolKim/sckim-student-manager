@@ -7,6 +7,7 @@ import camp.model.Student;
 import camp.model.StudentCreateRequest;
 import camp.model.Subject;
 import camp.service.StudentCreateService;
+import camp.service.StudentInquiryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,13 @@ public class StudentView {
     private final Scanner sc;
 
     private final StudentCreateService studentCreateService;
+    private final StudentInquiryService studentInquiryService;
 
     public StudentView(List<Student> studentStore, List<Subject> subjectStore) {
         this.subjectStore = subjectStore;
         this.studentStore = studentStore;
         this.studentCreateService = new StudentCreateService(studentStore);
+        this.studentInquiryService = new StudentInquiryService(studentStore);
         this.sc = new Scanner(System.in);
     }
 
@@ -159,5 +162,22 @@ public class StudentView {
             System.out.print((i+1) + ": " + subjects.get(i).getName());
         }
         System.out.println("]");
+    }
+
+    public void inquireStudent() {
+        final List<Student> studentList = studentInquiryService.getStudentList();
+
+        if (studentList.size() == 0) {
+            System.out.println("\n등록된 수강생이 없습니다...");
+        }
+        else {
+            System.out.println("\n수강생 목록을 조회합니다...");
+
+            for (int i = 0; i < studentList.size(); i++) {
+                System.out.println("<<" + (i + 1) + ">>\n" + studentList.get(i));
+            }
+
+            System.out.println("\n수강생 목록 조회 성공!");
+        }
     }
 }
