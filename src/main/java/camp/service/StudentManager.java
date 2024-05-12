@@ -15,6 +15,7 @@ public class StudentManager {
     private final List<Student> studentStore;
     private final List<Subject> subjectStore;
     private final StudentCreateManager scm;
+    private final StudentInquiryManager sim;
 
     // 스캐너
     private Scanner sc = new Scanner(System.in);
@@ -23,6 +24,7 @@ public class StudentManager {
         studentStore = new ArrayList<>();
         subjectStore = new ArrayList<>();
         scm = new StudentCreateManager(studentStore, subjectStore);
+        sim = new StudentInquiryManager(studentStore, subjectStore);
         initSubjects();
     }
 
@@ -46,25 +48,10 @@ public class StudentManager {
 
             switch (selectedMenu) {
                 case CREATE -> scm.createStudent(); // 수강생 등록
-                case INQUIRY -> inquireStudent(); // 수강생 목록 조회
+                case INQUIRY -> sim.inquireStudent(); // 수강생 목록 조회
                 case TO_MAIN -> flag = false; // 메인 화면 이동
             }
         }
-    }
-
-    // 수강생 목록 조회
-    private void inquireStudent() {
-        System.out.println("\n수강생 목록을 조회합니다...");
-        // 기능 구현
-        for (int i=0; i<studentStore.size(); i++) {
-            printStudent(i, studentStore);
-        }
-
-        System.out.println("\n수강생 목록 조회 성공!");
-    }
-
-    private void printStudent(int idx, List<?> store) {
-        System.out.println((idx+1) + " : " + store.get(idx));
     }
 
     private void printMenu() {
