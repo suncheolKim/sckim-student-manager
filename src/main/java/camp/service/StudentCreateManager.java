@@ -15,11 +15,11 @@ public class StudentCreateManager {
     private final List<Subject> subjectStore;
 
     // 스캐너
-    private Scanner sc;
+    private final Scanner sc;
 
-    public StudentCreateManager(List<Student> studentStore1, List<Subject> subjectStore1) {
-        this.studentStore = studentStore1;
-        this.subjectStore = subjectStore1;
+    public StudentCreateManager(List<Student> studentStore, List<Subject> subjectStore) {
+        this.studentStore = studentStore;
+        this.subjectStore = subjectStore;
         this.sc = new Scanner(System.in);
     }
 

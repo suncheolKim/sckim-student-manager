@@ -18,13 +18,13 @@ public class StudentManager {
     private final StudentInquiryManager sim;
 
     // 스캐너
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     public StudentManager() {
         studentStore = new ArrayList<>();
         subjectStore = new ArrayList<>();
         scm = new StudentCreateManager(studentStore, subjectStore);
-        sim = new StudentInquiryManager(studentStore, subjectStore);
+        sim = new StudentInquiryManager(studentStore);
         initSubjects();
     }
 

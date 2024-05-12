@@ -75,7 +75,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "\n\n***********************************************************\n" +
+        return "***********************************************************\n" +
                 "아이디 : " + id + '\n' +
                 "이름 : " + name + '\n' +
                 "필수 과목 :\n" + mandatorySubjects + '\n' +
