@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StudentCreateManager {
+public class StudentCreateService {
     private final List<Student> studentStore;
     private final List<Subject> subjectStore;
 
     // 스캐너
     private final Scanner sc;
 
-    public StudentCreateManager(List<Student> studentStore, List<Subject> subjectStore) {
+    public StudentCreateService(List<Student> studentStore, List<Subject> subjectStore) {
         this.studentStore = studentStore;
         this.subjectStore = subjectStore;
         this.sc = new Scanner(System.in);

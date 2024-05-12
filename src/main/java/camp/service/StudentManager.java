@@ -14,8 +14,8 @@ import java.util.Scanner;
 public class StudentManager {
     private final List<Student> studentStore;
     private final List<Subject> subjectStore;
-    private final StudentCreateManager scm;
-    private final StudentInquiryManager sim;
+    private final StudentCreateService scm;
+    private final StudentInquiryService sim;
 
     // 스캐너
     private final Scanner sc = new Scanner(System.in);
@@ -23,8 +23,8 @@ public class StudentManager {
     public StudentManager() {
         studentStore = new ArrayList<>();
         subjectStore = new ArrayList<>();
-        scm = new StudentCreateManager(studentStore, subjectStore);
-        sim = new StudentInquiryManager(studentStore);
+        scm = new StudentCreateService(studentStore, subjectStore);
+        sim = new StudentInquiryService(studentStore);
         initSubjects();
     }
 

@@ -4,10 +4,10 @@ import camp.model.Student;
 
 import java.util.List;
 
-public class StudentInquiryManager {
+public class StudentInquiryService {
     private final List<Student> studentStore;
 
-    public StudentInquiryManager(List<Student> studentStore) {
+    public StudentInquiryService(List<Student> studentStore) {
         this.studentStore = studentStore;
     }
 
