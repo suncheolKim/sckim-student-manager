@@ -13,12 +13,18 @@ import java.util.Scanner;
 
 public class CampManager {
     // 데이터 저장소
-    private static List<Student> studentStore;
-    private static List<Subject> subjectStore;
-    private static List<Score> scoreStore;
+    private List<Student> studentStore;
+    private List<Subject> subjectStore;
+    private List<Score> scoreStore;
 
     // 스캐너
-    private static Scanner sc = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
+
+    public CampManager() {
+        studentStore = new ArrayList<>();
+        subjectStore = new ArrayList<>();
+        scoreStore = new ArrayList<>();
+    }
 
     public void start() {
         setInitData();
@@ -30,7 +36,7 @@ public class CampManager {
     }
 
     // 초기 데이터 생성
-    private static void setInitData() {
+    private void setInitData() {
         studentStore = new ArrayList<>();
         subjectStore = List.of(
                 new Subject(SubjectList.JAVA)
@@ -46,7 +52,7 @@ public class CampManager {
         scoreStore = new ArrayList<>();
     }
 
-    private static void displayMainView() throws InterruptedException {
+    private void displayMainView() throws InterruptedException {
         boolean flag = true;
         while (flag) {
             Menu.printMainMenu();
@@ -66,7 +72,7 @@ public class CampManager {
         System.out.println("프로그램을 종료합니다.");
     }
 
-    private static void displayStudentView() {
+    private void displayStudentView() {
         boolean flag = true;
         while (flag) {
             Menu.printManageStudent();
@@ -85,7 +91,7 @@ public class CampManager {
     }
 
     // 수강생 등록
-    private static void createStudent() {
+    private void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
@@ -115,15 +121,15 @@ public class CampManager {
         System.out.println(student);
     }
 
-    private static void putMandatorySubjects(Student student, List<Subject> mandatorySubjects) {
+    private void putMandatorySubjects(Student student, List<Subject> mandatorySubjects) {
         putSubjects(mandatorySubjects, student, SubjectType.MANDATORY);
     }
 
-    private static void putOptionalSubjects(Student student, List<Subject> optionalSubjects) {
+    private void putOptionalSubjects(Student student, List<Subject> optionalSubjects) {
         putSubjects(optionalSubjects, student, SubjectType.OPTIONAL);
     }
 
-    private static void putSubjects(List<Subject> subjects, Student student, SubjectType subjectType) {
+    private void putSubjects(List<Subject> subjects, Student student, SubjectType subjectType) {
         final int minCountOfSubject;
         final List<Subject> subscribedSubjects;
         if (SubjectType.MANDATORY.equals(subjectType)) {
@@ -183,10 +189,6 @@ public class CampManager {
                 student.addMandatorySubject(selectedSubject);
                 student.printMandatorySubjects();
             }
-            else {
-                student.addOptionalSubject(selectedSubject);
-                student.printOptionalSubjects();
-            }
 
             if (subjects.size() > subscribedSubjects.size()) {
                 continue;
@@ -197,7 +199,7 @@ public class CampManager {
     }
 
     // 수강생 목록 조회
-    private static void inquireStudent() {
+    private void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         // 기능 구현
         for (int i=0; i<studentStore.size(); i++) {
@@ -207,11 +209,11 @@ public class CampManager {
         System.out.println("\n수강생 목록 조회 성공!");
     }
 
-    private static void printStudent(int idx, List<?> store) {
+    private void printStudent(int idx, List<?> store) {
         System.out.println(idx + " : " + store.get(idx));
     }
 
-    private static void displayScoreView() {
+    private void displayScoreView() {
         boolean flag = true;
         while (flag) {
             Menu.printManagePoint();
@@ -230,7 +232,7 @@ public class CampManager {
         }
     }
 
-    private static void setTestData() {
+    private void setTestData() {
         studentStore.add(new Student("아이유"));
         studentStore.add(new Student("마동석"));
         studentStore.add(new Student("카즈하"));
@@ -242,13 +244,13 @@ public class CampManager {
         System.out.println("테스트 데이터 생성 완료!");
     }
 
-    private static String getStudentId() {
+    private String getStudentId() {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록
-    private static void createScore() {
+    private void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         System.out.println("시험 점수를 등록합니다...");
         // 기능 구현
@@ -263,7 +265,7 @@ public class CampManager {
     }
 
     // 수강생의 과목별 회차 점수 수정
-    private static void updateRoundScoreBySubject() {
+    private void updateRoundScoreBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (수정할 과목 및 회차, 점수)
         System.out.println("시험 점수를 수정합니다...");
@@ -272,7 +274,7 @@ public class CampManager {
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
-    private static void inquireRoundGradeBySubject() {
+    private void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (조회할 특정 과목)
         System.out.println("회차별 등급을 조회합니다...");
