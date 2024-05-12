@@ -2,6 +2,7 @@ package camp.service;
 
 import camp.common.Menu;
 import camp.enumtype.SubjectList;
+import camp.enumtype.SubjectType;
 import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
@@ -89,9 +90,75 @@ public class CampManager {
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
-
-        Student student = new Student(studentName); // 수강생 인스턴스 생성 예시 코드
+        final Student student = new Student(studentName); // 수강생 인스턴스 생성 예시 코드
         studentStore.add(student);
+
+        // 필수과목 선택과목으로 분류
+        final List<Subject> mandatorySubjects = new ArrayList<>();
+        final List<Subject> optionalSubjects = new ArrayList<>();
+        for (Subject sbj : subjectStore) {
+            if (SubjectType.MANDATORY.equals(sbj.getType())) {
+                mandatorySubjects.add(sbj);
+            }
+            else if (SubjectType.OPTIONAL.equals(sbj.getType())) {
+                optionalSubjects.add(sbj);
+            }
+        }
+
+        // 필수과목 입력 받기
+        for (int i=0; i<mandatorySubjects.size(); i++) {
+            System.out.print((i+1) + ": " + mandatorySubjects.get(i).getName() + "\t");
+        }
+
+        while(true) {
+            String inputSubject = "";
+            if (SubjectList.MIN_MANDATORY_SUBJECT_COUNT <= student.getMandatorySubjects().size()) {
+                System.out.println("\n필수과목 입력 (최소 " + SubjectList.MIN_MANDATORY_SUBJECT_COUNT + "개) - 추가를 끝내시려면 `q`를 눌러주세요 : ");
+                inputSubject = sc.next();
+                if ("q".equalsIgnoreCase(inputSubject)) {
+                    break;
+                }
+            }
+            else {
+                System.out.println("\n필수과목 입력 (최소 3개) : ");
+                inputSubject = sc.next();
+            }
+
+            final boolean isDigit = inputSubject.matches("^[0-9]+$");
+
+            if (!isDigit) {
+                System.out.println("숫자만 입력해주세요.");
+                continue;
+            }
+            final int subjectNum = Integer.parseInt(inputSubject);
+            if (subjectNum > mandatorySubjects.size() || 0 == subjectNum) {
+                System.out.println("없는 과목 번호 입니다. (입력가능 1 ~ " + mandatorySubjects.size() + ")");
+                continue;
+            }
+
+            final Subject selectedSubject = mandatorySubjects.get(subjectNum - 1);
+
+            if (student.getMandatorySubjects().contains(selectedSubject)) {
+                System.out.println("이미 수강한 과목입니다.");
+                student.printMandatorySubjects();
+                continue;
+            }
+
+            student.addMandatorySubject(selectedSubject);
+            student.printMandatorySubjects();
+
+            if (mandatorySubjects.size() > student.getMandatorySubjects().size()) {
+                continue;
+            }
+
+            break;
+        }
+
+        for (int i=0; i<optionalSubjects.size(); i++) {
+            System.out.print((i+1) + ": " + optionalSubjects.get(i).getName() + "\t");
+        }
+        System.out.println("\n선택과목 입력 (최소 2개) : ");
+
 
         // 기능 구현
         System.out.println(student);
@@ -137,9 +204,9 @@ public class CampManager {
         studentStore.add(new Student("카즈하"));
         studentStore.add(new Student("안유진"));
         studentStore.add(new Student("차은우"));
-        scoreStore.add(new Score(10));
-        scoreStore.add(new Score(20));
-        scoreStore.add(new Score(30));
+        scoreStore.add(new Score(1,10));
+        scoreStore.add(new Score(2,20));
+        scoreStore.add(new Score(3, 30));
         System.out.println("테스트 데이터 생성 완료!");
     }
 
@@ -153,6 +220,13 @@ public class CampManager {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         System.out.println("시험 점수를 등록합니다...");
         // 기능 구현
+
+        System.out.println("## 등록 가능한 과목");
+        scoreStore.forEach(s -> System.out.print(s.getScore()));
+        System.out.println("과목을 입력하세요: ");
+        System.out.println("");
+        System.out.println("");
+
         System.out.println("\n점수 등록 성공!");
     }
 
