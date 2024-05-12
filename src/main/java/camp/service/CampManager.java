@@ -106,106 +106,94 @@ public class CampManager {
         }
 
         // 필수과목 입력 받기
-        for (int i=0; i<mandatorySubjects.size(); i++) {
-            System.out.print((i+1) + ": " + mandatorySubjects.get(i).getName() + "\t");
-        }
-
-        while(true) {
-            String inputSubject = "";
-            if (SubjectList.MIN_COUNT_OF_MANDATORY_SUBJECT <= student.getMandatorySubjects().size()) {
-                System.out.println("\n필수과목 입력 (최소 " + SubjectList.MIN_COUNT_OF_MANDATORY_SUBJECT + "개) - 추가를 끝내시려면 `q`를 눌러주세요 : ");
-                inputSubject = sc.next();
-                if ("q".equalsIgnoreCase(inputSubject)) {
-                    break;
-                }
-            }
-            else {
-                System.out.println("\n필수과목 입력 (최소 " + SubjectList.MIN_COUNT_OF_MANDATORY_SUBJECT + "개) : ");
-                inputSubject = sc.next();
-            }
-
-            final boolean isDigit = inputSubject.matches("^[0-9]+$");
-
-            if (!isDigit) {
-                System.out.println("숫자만 입력해주세요.");
-                continue;
-            }
-            final int subjectNum = Integer.parseInt(inputSubject);
-            if (subjectNum > mandatorySubjects.size() || 0 == subjectNum) {
-                System.out.println("없는 과목 번호 입니다. (입력가능 1 ~ " + mandatorySubjects.size() + ")");
-                continue;
-            }
-
-            final Subject selectedSubject = mandatorySubjects.get(subjectNum - 1);
-
-            if (student.getMandatorySubjects().contains(selectedSubject)) {
-                System.out.println("이미 수강한 과목입니다.");
-                student.printMandatorySubjects();
-                continue;
-            }
-
-            student.addMandatorySubject(selectedSubject);
-            student.printMandatorySubjects();
-
-            if (mandatorySubjects.size() > student.getMandatorySubjects().size()) {
-                continue;
-            }
-
-            break;
-        }
+        putMandatorySubjects(student, mandatorySubjects);
 
         // 선택과목 입력 받기
-        for (int i=0; i<optionalSubjects.size(); i++) {
-            System.out.print((i+1) + ": " + optionalSubjects.get(i).getName() + "\t");
-        }
-
-        while(true) {
-            String inputSubject = "";
-            if (SubjectList.MIN_COUNT_OF_OPTIONAL_SUBJECT <= student.getOptionalSubjects().size()) {
-                System.out.println("\n선택과목 입력 (최소 " + SubjectList.MIN_COUNT_OF_OPTIONAL_SUBJECT + "개) - 추가를 끝내시려면 `q`를 눌러주세요 : ");
-                inputSubject = sc.next();
-                if ("q".equalsIgnoreCase(inputSubject)) {
-                    break;
-                }
-            }
-            else {
-                System.out.println("\n선택과목 입력 (최소 " + SubjectList.MIN_COUNT_OF_OPTIONAL_SUBJECT + "개) : ");
-                inputSubject = sc.next();
-            }
-
-            final boolean isDigit = inputSubject.matches("^[0-9]+$");
-
-            if (!isDigit) {
-                System.out.println("숫자만 입력해주세요.");
-                continue;
-            }
-            final int subjectNum = Integer.parseInt(inputSubject);
-            if (subjectNum > optionalSubjects.size() || 0 == subjectNum) {
-                System.out.println("없는 과목 번호 입니다. (입력가능 1 ~ " + optionalSubjects.size() + ")");
-                continue;
-            }
-
-            final Subject selectedSubject = optionalSubjects.get(subjectNum - 1);
-
-            if (student.getOptionalSubjects().contains(selectedSubject)) {
-                System.out.println("이미 수강한 과목입니다.");
-                student.printOptionalSubjects();
-                continue;
-            }
-
-            student.addOptionalSubject(selectedSubject);
-            student.printOptionalSubjects();
-
-            if (optionalSubjects.size() > student.getOptionalSubjects().size()) {
-                continue;
-            }
-
-            break;
-        }
-
+        putOptionalSubjects(student, optionalSubjects);
 
         // 기능 구현
         System.out.println(student);
+    }
+
+    private static void putMandatorySubjects(Student student, List<Subject> mandatorySubjects) {
+        putSubjects(mandatorySubjects, student, SubjectType.MANDATORY);
+    }
+
+    private static void putOptionalSubjects(Student student, List<Subject> optionalSubjects) {
+        putSubjects(optionalSubjects, student, SubjectType.OPTIONAL);
+    }
+
+    private static void putSubjects(List<Subject> subjects, Student student, SubjectType subjectType) {
+        final int minCountOfSubject;
+        final List<Subject> subscribedSubjects;
+        if (SubjectType.MANDATORY.equals(subjectType)) {
+            minCountOfSubject = SubjectList.MIN_COUNT_OF_MANDATORY_SUBJECT;
+            subscribedSubjects = student.getMandatorySubjects();
+        }
+        else {
+            minCountOfSubject = SubjectList.MIN_COUNT_OF_OPTIONAL_SUBJECT;
+            subscribedSubjects = student.getOptionalSubjects();
+        }
+
+        for (int i = 0; i< subjects.size(); i++) {
+            System.out.print((i+1) + ": " + subjects.get(i).getName() + "\t");
+        }
+
+        while(true) {
+            String inputSubject = "";
+            if (minCountOfSubject <= subscribedSubjects.size()) {
+                System.out.println("\n" + subjectType.getDesc() + "과목 입력 (최소 " + minCountOfSubject + "개) - 추가를 끝내시려면 `q`를 눌러주세요 : ");
+                inputSubject = sc.next();
+                if ("q".equalsIgnoreCase(inputSubject)) {
+                    break;
+                }
+            }
+            else {
+                System.out.println("\n" + subjectType.getDesc() + "과목 입력 (최소 " + minCountOfSubject + "개) : ");
+                inputSubject = sc.next();
+            }
+
+            final boolean isDigit = inputSubject.matches("^[0-9]+$");
+
+            if (!isDigit) {
+                System.out.println("숫자만 입력해주세요.");
+                continue;
+            }
+            final int subjectNum = Integer.parseInt(inputSubject);
+            if (subjectNum > subjects.size() || 0 == subjectNum) {
+                System.out.println("없는 과목 번호 입니다. (입력가능 1 ~ " + subjects.size() + ")");
+                continue;
+            }
+
+            final Subject selectedSubject = subjects.get(subjectNum - 1);
+
+            if (subscribedSubjects.contains(selectedSubject)) {
+                System.out.println("이미 수강한 과목입니다.");
+                if (SubjectType.MANDATORY.equals(subjectType)) {
+                    student.printMandatorySubjects();
+                }
+                else {
+                    student.printOptionalSubjects();
+                }
+                continue;
+            }
+
+
+            if (SubjectType.MANDATORY.equals(subjectType)) {
+                student.addMandatorySubject(selectedSubject);
+                student.printMandatorySubjects();
+            }
+            else {
+                student.addOptionalSubject(selectedSubject);
+                student.printOptionalSubjects();
+            }
+
+            if (subjects.size() > subscribedSubjects.size()) {
+                continue;
+            }
+
+            break;
+        }
     }
 
     // 수강생 목록 조회

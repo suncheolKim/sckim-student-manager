@@ -51,19 +51,10 @@ public class Student {
         return scores;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", scores='" + scores.toString() + '\'' +
-                '}';
-    }
-
     public void printMandatorySubjects() {
         System.out.print("## 수강한 필수 과목: [");
         for (int i=0; i<mandatorySubjects.size(); i++) {
-            if (mandatorySubjects.size() >= 2) {
+            if (i >= 1) {
                 System.out.print(",\t");
             }
             System.out.print((i+1) + ": " + mandatorySubjects.get(i).getName());
@@ -74,11 +65,22 @@ public class Student {
     public void printOptionalSubjects() {
         System.out.print("## 수강한 선택 과목: [");
         for (int i=0; i<optionalSubjects.size(); i++) {
-            if (optionalSubjects.size() >= 2) {
+            if (i >= 1) {
                 System.out.print(",\t");
             }
             System.out.print((i+1) + ": " + optionalSubjects.get(i).getName());
         }
         System.out.println("]");
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", mandatorySubjects=" + mandatorySubjects +
+                ", optionalSubjects=" + optionalSubjects +
+                ", scores=" + scores +
+                '}';
     }
 }
